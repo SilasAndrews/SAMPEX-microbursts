@@ -28,7 +28,7 @@ def eval_state1():
         generate_txt.write("Time Rate4 Avg_local_background")
 
     with open("..\Burst Parameter\TimeResultState1.txt", "a") as result:
-        pbar = tqdm(total=len(iterate_list))
+        pbar1 = tqdm(total=len(iterate_list))
         for item in iterate_list:
 
             data_set = pd.read_table(item, sep=' ', header=0)
@@ -51,7 +51,8 @@ def eval_state1():
                     result.write('\n' + time_stamp + " " + str(data_set["Rate4"][i])
                                  + " " + background)
 
-            pbar.update(1)
+            pbar1.update(1)
+        pbar1.close()
 
 
 def eval_state4():
@@ -70,7 +71,7 @@ def eval_state4():
         generate_txt.write("Time Rate5 Avg_local_background")
 
     with open("..\Burst Parameter\TimeResultState4.txt", "a") as result:
-        pbar = tqdm(total=len(iterate_list))
+        pbar4 = tqdm(total=len(iterate_list))
         for item in iterate_list[:4]:
 
             data_set = pd.read_table(item, sep=' ', header=0)
@@ -92,7 +93,8 @@ def eval_state4():
                                   int(data_set["Rate5"][i + 1]) + int(data_set["Rate5"][i + 2])) / 4
                     result.write('\n' + time_stamp + " " + str(data_set["Rate4"][i])
                                  + " " + background)
-            print("Evaluated", item)
+            pbar4.update(1)
+        pbar4.close()
 
 
 eval_state1()
