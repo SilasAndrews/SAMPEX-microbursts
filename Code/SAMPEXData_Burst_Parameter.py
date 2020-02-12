@@ -3,6 +3,8 @@
 import os
 import pandas as pd
 import math
+from tqdm import tqdm
+
 
 
 def eval_state1():
@@ -26,7 +28,7 @@ def eval_state1():
         generate_txt.write("Time Rate4 Avg_local_background")
 
     with open("..\Burst Parameter\TimeResultState1.txt", "a") as result:
-
+        pbar = tqdm(total=len(iterate_list))
         for item in iterate_list:
 
             data_set = pd.read_table(item, sep=' ', header=0)
@@ -49,7 +51,7 @@ def eval_state1():
                     result.write('\n' + time_stamp + " " + str(data_set["Rate4"][i])
                                  + " " + background)
 
-            print("Evaluated", item)
+            pbar.update(1)
 
 
 def eval_state4():
@@ -68,7 +70,7 @@ def eval_state4():
         generate_txt.write("Time Rate5 Avg_local_background")
 
     with open("..\Burst Parameter\TimeResultState4.txt", "a") as result:
-
+        pbar = tqdm(total=len(iterate_list))
         for item in iterate_list[:4]:
 
             data_set = pd.read_table(item, sep=' ', header=0)
