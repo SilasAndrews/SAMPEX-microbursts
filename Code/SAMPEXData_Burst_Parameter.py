@@ -23,13 +23,27 @@ def eval_state1():
             " Remaining fragment from download programs "
             iterate_list.append(item)
 
-    # Analyze each file, record significant results
-    with open("..\Burst Parameter\TimeResultState1.txt", "w") as generate_txt:
-        generate_txt.write("Time Rate4 Avg_local_background")
 
+    """ IMPORTANT """
+
+    """ Address starting point if starting in middle of code """
+    start = "hhrr1992239.txt"
+    s = iterate_list.index(start)
+
+    
+
+    # Analyze each file, record significant results
+    if s != 0:
+        with open("..\Burst Parameter\TimeResultState1.txt", "w") as generate_txt:
+            generate_txt.write("Time Rate4 Avg_local_background")
+
+    #pbar1 = tqdm(total=len(iterate_list))
+
+    """ tqdm not compatible with IDLE yet """
+        
     with open("..\Burst Parameter\TimeResultState1.txt", "a") as result:
-        pbar1 = tqdm(total=len(iterate_list))
-        for item in iterate_list:
+        
+        for item in iterate_list[s:]:
 
             data_set = pd.read_table(item, sep=' ', header=0)
 
@@ -49,10 +63,11 @@ def eval_state1():
                     background = (int(data_set["Rate4"][i - 2]) + int(data_set["Rate4"][i - 1]) +
                                   int(data_set["Rate4"][i + 1]) + int(data_set["Rate4"][i + 2])) / 4
                     result.write('\n' + time_stamp + " " + str(data_set["Rate4"][i])
-                                 + " " + background)
+                                 + " " + str(background))
 
-            pbar1.update(1)
-        pbar1.close()
+            #pbar1.update(1)
+            print("Evaluated", item)
+        #pbar1.close()
 
 
 def eval_state4():
@@ -71,7 +86,10 @@ def eval_state4():
         generate_txt.write("Time Rate5 Avg_local_background")
 
     with open("..\Burst Parameter\TimeResultState4.txt", "a") as result:
-        pbar4 = tqdm(total=len(iterate_list))
+        #pbar4 = tqdm(total=len(iterate_list))
+
+        """ tqdm not compatible with IDLE yet """
+        
         for item in iterate_list[:4]:
 
             data_set = pd.read_table(item, sep=' ', header=0)
@@ -92,10 +110,13 @@ def eval_state4():
                     background = (int(data_set["Rate5"][i - 2]) + int(data_set["Rate5"][i - 1]) +
                                   int(data_set["Rate5"][i + 1]) + int(data_set["Rate5"][i + 2])) / 4
                     result.write('\n' + time_stamp + " " + str(data_set["Rate4"][i])
-                                 + " " + background)
-            pbar4.update(1)
-        pbar4.close()
+                                 + " " + str(background))
+            #pbar4.update(1)
+            print("Evaluated", item)
+        #pbar4.close()
 
 
 eval_state1()
-eval_state4()
+#eval_state4()
+print("End of program.")
+
