@@ -23,19 +23,9 @@ def eval_state1():
             " Remaining fragment from download programs "
             iterate_list.append(item)
 
-
-    """ IMPORTANT """
-
-    """ Address starting point if starting in middle of code """
-    start = "hhrr1992239.txt"
-    s = iterate_list.index(start)
-
-    
-
     # Analyze each file, record significant results
-    if s != 0:
-        with open("..\Burst Parameter\TimeResultState1.txt", "w") as generate_txt:
-            generate_txt.write("Time Rate4 Avg_local_background")
+    with open("..\Burst Parameter\TimeResultState1.txt", "w") as generate_txt:
+        generate_txt.write("Time Rate4 Avg_local_background")
 
     #pbar1 = tqdm(total=len(iterate_list))
 
@@ -43,7 +33,7 @@ def eval_state1():
         
     with open("..\Burst Parameter\TimeResultState1.txt", "a") as result:
         
-        for item in iterate_list[s:]:
+        for item in iterate_list:
 
             data_set = pd.read_table(item, sep=' ', header=0)
 
