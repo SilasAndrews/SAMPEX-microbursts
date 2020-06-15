@@ -6,10 +6,12 @@ import math
 from tqdm import tqdm
 
 
+original_folder = os.getcwd()
+
 
 def eval_state1():
     """Plan : create smaller dataframe w/ needed columns. Will need to have
-        a different process for state 1 and state 2. Evaluate each row w/
+        a different process for state 1 and state 4. Evaluate each row w/
         O'Brien formula."""
 
     data_folder = "..\DATA\State1"
@@ -30,17 +32,17 @@ def eval_state1():
     #pbar1 = tqdm(total=len(iterate_list))
 
     """ tqdm not compatible with IDLE yet """
-        
+
     with open("..\Burst Parameter\TimeResultState1.txt", "a") as result:
-        
+
         for item in iterate_list:
 
             data_set = pd.read_table(item, sep=' ', header=0)
 
-            for i in range(2, len(data_set) - 2):
+            for i in range(2, len(data_set) - 3):
                 # OBrein
                 N100 = data_set["Rate4"][i]
-                mini_frame = data_set[i - 2:i + 2]
+                mini_frame = data_set[i - 2:i + 3]
                 A500 = mini_frame["Rate4"].mean()
 
                 """ be sure to include the date as well, otherwise the times
@@ -58,6 +60,7 @@ def eval_state1():
             #pbar1.update(1)
             print("Evaluated", item)
         #pbar1.close()
+    os.chdir(original_folder)
 
 
 def eval_state4():
@@ -79,15 +82,15 @@ def eval_state4():
         #pbar4 = tqdm(total=len(iterate_list))
 
         """ tqdm not compatible with IDLE yet """
-        
-        for item in iterate_list[:4]:
 
-            data_set = pd.read_table(item, sep=' ', header=0)
+        for item in iterate_list:
 
-            for i in range(2, len(data_set) - 2):
+            data_set = pd.read_table(item, sep='\\s+', header=0)
+
+            for i in range(2, len(data_set)-3):     # 2, len(data_set)-3
                 # OBrein
                 N100 = data_set["Rate5"][i]
-                mini_frame = data_set[i - 2:i + 2]
+                mini_frame = data_set[i - 2:i + 3]
                 A500 = mini_frame["Rate5"].mean()
 
                 """ be sure to include the date as well, otherwise the times
@@ -99,14 +102,16 @@ def eval_state4():
                     time_stamp = item[4:-4] + "_" + str(data_set["Time"][i])
                     background = (int(data_set["Rate5"][i - 2]) + int(data_set["Rate5"][i - 1]) +
                                   int(data_set["Rate5"][i + 1]) + int(data_set["Rate5"][i + 2])) / 4
-                    result.write('\n' + time_stamp + " " + str(data_set["Rate4"][i])
+                    result.write('\n' + time_stamp + " " + str(data_set["Rate5"][i])
                                  + " " + str(background))
-            #pbar4.update(1)
-            print("Evaluated", item)
-        #pbar4.close()
+                # pbar4.update(1)
+            print("Evaluated", item)   # Remember to fix this line later
+        # pbar4.close()
+    os.chdir(original_folder)
 
 
-eval_state1()
-#eval_state4()
+eval_state4()
+
+
 print("End of program.")
 
